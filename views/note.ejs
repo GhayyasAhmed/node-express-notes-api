@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+      .field {
+        margin-bottom: 12px;
+      }
+      label {
+        display: block;
+        margin-bottom: 4px;
+      }
+      input {
+        width: 320px;
+        padding: 8px;
+      }
+    </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Note Details</title>
+  </head>
+  <body>
+    <h1>Note Details</h1>
+    <div style="margin-bottom: 20px">
+      <a href="/notes">Back to All Notes</a>
+    </div>
+
+    <form method="POST" action="/api/notes/<%= note._id %>">
+      <div class="field">
+        <label for="title">Title</label>
+        <input id="title" maxlength="20" name="title" type="text" value="<%= note.title %>" required />
+      </div>
+      <div class="field">
+        <label for="content">Content</label>
+        <input id="content" maxlength="40" name="content" type="text" value="<%= note.content %>" required />
+      </div>
+      <div class="field">
+        <label>Creator Name</label>
+        <input type="text" value="<%= note.user ? note.user.name : 'Unknown' %>" disabled />
+      </div>
+      <!-- <div class="field">
+        <label>Created At</label>
+        <input type="text" value="<%= note.createdAt %>" disabled />
+      </div>
+      <div class="field">
+        <label>Updated At</label>
+        <input type="text" value="<%= note.updatedAt %>" disabled />
+      </div> -->
+      <button type="submit">Update</button>
+    </form>
+  </body>
+</html>

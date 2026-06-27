@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+    </style>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home Page</title>
+  </head>
+  <body>
+    <h1>Notes app</h1>
+    <div>
+      <form method="POST" action="/api/notes">
+        <label>Enter Your Note Title</label>
+        <input type="text" name="title" placeholder="Note Title" required />
+        <label>Enter Your Note Content</label>
+        <input type="text" name="content" placeholder="Note Content" required />
+        <button type="submit">Create Note</button>
+      </form>
+    </div>
+    <div style="margin-top: 20px">
+      <a href="/notes">Go to All Notes</a>
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+    </style>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>All Notes</title>
+  </head>
+  <body>
+    <h1>All Notes</h1>
+    <% function formatDate(dateValue) { const date = new Date(dateValue); const pad = (n) => String(n).padStart(2, "0"); return `${pad(date.getMonth() + 1)}/${pad(date.getDate())}/${date.getFullYear()}:${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}`; } %>
+
+    <div style="margin-bottom: 20px">
+      <a href="/">Add New Note</a>
+    </div>
+
+    <div style="margin-top: 30px">
+      <% if (locals.notes.length > 0) { %>
+      <table>
+        <thead>
+          <th>S. No</th>
+          <th>Title</th>
+          <th>Content</th>
+          <th>Creator Name</th>
+          <th>Created At</th>
+          <th>Updated At</th>
+          <th>Actions</th>
+        </thead>
+        <tbody>
+          <% notes.forEach((note, index) => { %>
+          <tr>
+            <td><%= index + 1 %></td>
+            <td><%= note.title %></td>
+            <td><%= note.content %></td>
+            <td><%= note.user ? note.user.name : "Unknown" %></td>
+            <td><%= formatDate(note.createdAt) %></td>
+            <td><%= formatDate(note.updatedAt) %></td>
+            <td>
+              <button type="button" onclick="window.location.href='/notes/<%= note._id %>'">View</button>
+              <button type="button" onclick="deleteNote('<%= note._id %>')">Delete</button>
+            </td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+      <% } else { %>
+      <p>No notes yet.</p>
+      <% } %>
+    </div>
+
+    <script>
+      async function deleteNote(noteId) {
+        try {
+          const confirmed = confirm("Delete this note?");
+          if (!confirmed) return;
+
+          const response = await fetch(`/api/notes/${noteId}`, {
+            method: "DELETE",
+            credentials: "same-origin",
+          });
+
+          const data = await response.json();
+          if (!response.ok) {
+            alert(data.error || "Failed to delete note");
+            return;
+          }
+
+          window.location.reload();
+        } catch (error) {
+          alert("Failed to delete note");
+        }
+      }
+    </script>
+  </body>
+</html>
