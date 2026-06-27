@@ -1,5 +1,4 @@
 
-const e = require("express");
 const User = require("../models/user");
 const { setUser } = require("../utils/auth");
 async function handleUserSignup(req, res, next) {
