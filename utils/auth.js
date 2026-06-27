@@ -1,8 +1,11 @@
 
 const jwt = require("jsonwebtoken")
-const secret = "Ghayyas@99#*&"
+const secret = process.env.JWT_SECRET;
 
 function setUser(user) {
+    if (!secret) {
+        throw new Error("JWT_SECRET is not configured");
+    }
     return jwt.sign({
         _id: user._id,
         email: user.email    
@@ -10,6 +13,7 @@ function setUser(user) {
 }
 
 function getUser(token) {
+    if (!secret) return null;
     if (!token) return null;
     try {
         return jwt.verify(token, secret)

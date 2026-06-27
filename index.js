@@ -1,6 +1,7 @@
 const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
+require("dotenv").config();
 const { connectToMongoDB } = require("./connection");
 const { checkForAuthentication, requireAuth } = require("./middlewares/auth");
 const { notFoundHandler, globalErrorHandler } = require("./middlewares/error");
@@ -12,7 +13,9 @@ const noteRoute = require("./routes/note");
 const app = express();
 const PORT = 3001;
 
-connectToMongoDB(process.env.MONGODB ?? "mongodb://localhost:27017/notes-app").then(() =>
+const MONGODB_URI = process.env.MONGODB_URI ?? "mongodb://localhost:27017/notes-app";
+
+connectToMongoDB(MONGODB_URI).then(() =>
   console.log("Mongodb connected")
 );
 
